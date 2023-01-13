@@ -1,0 +1,37 @@
+---------------EXECUTE DDL COMMAND WITH - EXECUTE IMMEDIATE STATEMENT  [WAY 1]-----------------
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    SQL_QRY VARCHAR2(150);
+BEGIN
+    SQL_QRY := 'CREATE TABLE TUTORIAL_DNYAMIC(
+                TUT_ID NUMBER(4),
+                TUT_NAME VARCHAR2(15)
+                )';
+				
+    EXECUTE IMMEDIATE SQL_QRY;
+END;
+/
+
+DESC TUTORIAL_DNYAMIC;
+            
+            
+---------------EXECUTE DDL COMMAND WITH - EXECUTE IMMEDIATE STATEMENT  [WAY 2]-----------------
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    DDL_QRY VARCHAR2(150);
+BEGIN
+    DDL_QRY :=  'CREATE TABLE TUT83 ('||
+                'TUT_ID NUMBER(2),'||
+                'TUT_NAME VARCHAR2(10),'||
+                'CONSTRAINT TID_PK PRIMARY KEY(TUT_ID)'||
+                ')';
+    
+    EXECUTE IMMEDIATE DDL_QRY;
+END;
+/
+
+DESC TUT83;
