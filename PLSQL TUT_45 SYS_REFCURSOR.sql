@@ -1,0 +1,57 @@
+------------------------- SYS_REFCURSOR---------------------------------------------------------
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CUR_VAR SYS_REFCURSOR;
+    
+    F_NAME EMPLOYEE.FIRST_NAME%TYPE;
+    L_NAME EMPLOYEE.LAST_NAME%TYPE;
+    EMP_SAL EMPLOYEE.SALARY%TYPE;
+    
+BEGIN
+    OPEN CUR_VAR FOR SELECT FIRST_NAME, LAST_NAME, SALARY FROM EMPLOYEE WHERE EMPID = 2;
+    FETCH CUR_VAR INTO F_NAME, L_NAME, EMP_SAL;
+    CLOSE CUR_VAR;
+    DBMS_OUTPUT.PUT_LINE(F_NAME || ' ' || L_NAME || ' ' || EMP_SAL);
+END;
+/
+
+----------------------------------------------------------------------------------------------
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CUR_VAR SYS_REFCURSOR;
+    
+    F_NAME EMPLOYEE.FIRST_NAME%TYPE;
+    EMP_SAL EMPLOYEE.SALARY%TYPE;
+    
+BEGIN
+    OPEN CUR_VAR FOR SELECT FIRST_NAME, SALARY FROM EMPLOYEE;
+    LOOP
+        FETCH CUR_VAR INTO F_NAME, EMP_SAL;
+        EXIT WHEN CUR_VAR%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(F_NAME || ' ' || EMP_SAL);
+    END LOOP;
+    CLOSE CUR_VAR;
+END;
+/
+
+--------------------------------------------------------------------------------------------
+SET SERVEROUTPUT ON;
+    
+DECLARE
+    CUR_VAR SYS_REFCURSOR;
+    
+    F_CARNAME SPORTS_CARS.car_name%TYPE;
+    F_BRANDNAME SPORTS_CARS.brand_name%TYPE;
+BEGIN
+    OPEN CUR_VAR FOR SELECT CAR_NAME, BRAND_NAME FROM SPORTS_CARS;
+    LOOP
+        FETCH CUR_VAR INTO F_CARNAME, F_BRANDNAME;
+        EXIT WHEN CUR_VAR%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(F_CARNAME || ' ' || F_BRANDNAME);
+    END LOOP;
+    CLOSE CUR_VAR;
+END;
+/
