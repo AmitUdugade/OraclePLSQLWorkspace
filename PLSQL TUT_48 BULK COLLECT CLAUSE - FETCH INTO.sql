@@ -1,0 +1,77 @@
+-------------------------BULK COLLECT CLAUSE - FETCH INTO--------------------------------
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CURSOR EXP_CUR IS
+    SELECT FIRST_NAME FROM EMPLOYEE;
+    
+    TYPE V_FNAME IS TABLE OF VARCHAR2(20);                       -- COLLECTION TYPE V_FNAME TO HOLD & STORE THE DATA THAT CURSOR BRINGS.
+    FNAME V_FNAME;												-- FNAME IS COLLECT VARIABLE.
+    
+BEGIN
+    OPEN EXP_CUR;
+    LOOP
+        FETCH EXP_CUR BULK COLLECT INTO FNAME;
+        EXIT WHEN FNAME.COUNT = 0;								-- EXIT WHEN EXP_CUR%NOTFOUND
+        FOR I IN FNAME.FIRST..FNAME.LAST                         --  FOR I IN 1..FNAME.COUNT
+        LOOP
+            DBMS_OUTPUT.PUT_LINE(I || ' ' || FNAME(I));
+        END LOOP;
+    END LOOP;
+END EXP_CUR;
+/
+
+---------------------------------------------------------------------------------------------------
+
+DECLARE
+    CURSOR EXP_CUR IS 
+    SELECT CAR_NAME, BRAND_NAME FROM SPORTS_CARS;
+    
+    TYPE V_SP_CARS IS TABLE OF VARCHAR2(255);     -- HOLDS THE VALUE FOR CAR NAME WITH DATA SIZE 255
+    CNAME V_SP_CARS;
+    
+    TYPE V_SP_CARS1 IS TABLE OF VARCHAR2(50);      -- HOLDS THE VALUE FOR BRAND NAME WITH DATA SIZE 50
+    BNAME V_SP_CARS1;
+    
+BEGIN
+    OPEN EXP_CUR;
+    LOOP
+        FETCH EXP_CUR BULK COLLECT INTO CNAME, BNAME;
+        EXIT WHEN CNAME.COUNT = 0;
+        FOR I IN CNAME.FIRST..CNAME.LAST
+        LOOP
+            DBMS_OUTPUT.PUT_LINE(I || ' ' || CNAME(I) || '  ' || BNAME(I));
+        END LOOP;
+    END LOOP;
+    CLOSE EXP_CUR;
+END;
+/
+
+----------------------------------------------------------------------------------------------------
+DECLARE
+    CURSOR EXP_CUR IS 
+    SELECT CAR_ID, CAR_NAME, BRAND_NAME FROM SPORTS_CARS;
+    
+    TYPE V_SP_CARS IS TABLE OF VARCHAR2(255);
+    CNAME V_SP_CARS;
+    
+    TYPE V_SP_CARS1 IS TABLE OF VARCHAR2(50);
+    BNAME V_SP_CARS1;
+    
+    TYPE V_SP_CARS2 IS TABLE OF NUMBER;
+    CID V_SP_CARS2;
+    
+BEGIN
+    OPEN EXP_CUR;
+    LOOP
+        FETCH EXP_CUR BULK COLLECT INTO CID, CNAME, BNAME;
+        EXIT WHEN CNAME.COUNT = 0;
+        FOR I IN CNAME.FIRST..CNAME.LAST
+        LOOP
+            DBMS_OUTPUT.PUT_LINE(I || ' ' || CID(I) || '  ' || CNAME(I) || '  ' || BNAME(I));
+        END LOOP;
+    END LOOP;
+    CLOSE EXP_CUR;
+END;
+/
