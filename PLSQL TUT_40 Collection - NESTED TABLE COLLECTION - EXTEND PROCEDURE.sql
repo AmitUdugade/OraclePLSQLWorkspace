@@ -1,0 +1,48 @@
+------------------NESTED TABLE COLLECTION - EXTEND PROCEDURE-------------------------------------
+SET SERVEROUTPUT ON;
+
+DECLARE
+    TYPE MY_NESTED_TABLE IS TABLE OF NUMBER;
+    NUM MY_NESTED_TABLE := MY_NESTED_TABLE();
+BEGIN
+    NUM.EXTEND;
+    NUM(1) := 10;
+    DBMS_OUTPUT.PUT_LINE('VALUES AT INDEX[1] IS ' ||NUM(1));
+END;
+/
+
+------------------------------------------------------------------------------------------
+SET SERVEROUTPUT ON;
+
+DECLARE
+    TYPE MY_NESTED_TABLE IS TABLE OF NUMBER;
+    NUM MY_NESTED_TABLE := MY_NESTED_TABLE();
+BEGIN
+    NUM.EXTEND(3);
+    NUM(1) := 10;
+    NUM(2) := 20;
+    NUM(3) := 30;
+    DBMS_OUTPUT.PUT_LINE('VALUE AT INDEX[1] IS ' ||NUM(1));
+    DBMS_OUTPUT.PUT_LINE('VALUE AT INDEX[2] IS ' ||NUM(2));
+    DBMS_OUTPUT.PUT_LINE('VALUE AT INDEX[3] IS ' ||NUM(3));
+END;
+/
+
+-------------------------------------------------------------------------------------------
+SET SERVEROUTPUT ON;
+
+DECLARE
+    TYPE MY_NESTED_TABLE IS TABLE OF NUMBER;
+    NUM MY_NESTED_TABLE := MY_NESTED_TABLE();
+BEGIN
+    NUM.EXTEND;
+    NUM(1) := 21;
+    DBMS_OUTPUT.PUT_LINE('VALUE AT INDEX 1 IS ' || NUM(1));
+    NUM.EXTEND(5,1);
+    DBMS_OUTPUT.PUT_LINE('VALUE AT INDEX 4 IS ' || NUM(4));
+END;
+/
+
+O/P:
+VALUE AT INDEX 1 IS 21
+VALUE AT INDEX 4 IS 21
